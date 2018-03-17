@@ -1,20 +1,24 @@
-public constructormain()
-{}
+------------Exception-----------------
+**finally block will get executed if try block is hit only whether the exception is handled or not.***
+****Generic classes definition--public class <t>{ }-----
+------Generic function--example---public string SendMessage<T>(T[] contactList, T contactToSearch, string message)----
+																						
+in the namespace(system.collections)--Array list------using system.collections class--
+ArrayList obj=new ArrayList;--
+----page 42--
 
-public contructor1(1 parameter).this()///this will call upper one
-{}
+***List***
+---namespace -(system.collections.generic)---List<T> t can be any type------(generic list are type safe)
+List<string>=new List<string>();
+_______________________________________________________________________________________________________________________________
+-----User exception classes-------
+..........user-defined exception classes should be derived from System.Exception class......
+**********public class User_defined_exception:Exception
+					{ -------------------------	}
+	----we have to manually throw exception --syntax--LessAgeException obj=new LessAgeException(); throw obj;--
+--------while calling user-defined exceptions we have to call base class constructor--
+0----------------(public exception_classname:base(string_name)){}----------------
 
-public constructor2(3 parameter including upper one).this(1 parameter) ////this will call upper one
+**Generic Interface--Hybrid---
 
-------join-------
-****string msg=String.join(",",string__name);
------------------
-
-
-
----string---
-contains(),compareto(),equals(),replacae(),substring()
-_---------
-
-----stringBuilder----
-append(),appendline(),remove(),insert(),clear()
+_______________________________________________________________________________________________________________________________
