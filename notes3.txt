@@ -1,0 +1,67 @@
+-----------------Call by value---------------------------(main value of variable wont change)
+******A parameter passed as value has to follow the below conditions: 
+
+**It should be initialized before the method call
+
+**The method call can pass direct values or variables***********
+_________________________________________________________________________________________________________________________
+
+------can solve this problem by passing address of variable with ref. keyword-----------------(work on address)
+
+
+------Conditions----for reference ------------------
+__It should be initialized before the method call
+
+__ref keyword must be specified both in the method call and in the method definition
+
+__The method call cannot take direct values, only variables can be passed
+
+__A method can have any number of ref parameters
+
+__________________________________________________________________________________________________________________________
+
+------there is also out---------(value and address is passed)------------work on variable
+    	A parameter passed as output has to follow these rules:
+ 
+       	Need not be initialized before the method call
+
+	Should be assigned with a value inside the method*******(most imp.)
+
+	out keyword must be specified both in the method call and in the method definition
+
+	The method call cannot take direct values, only variables can be passed
+
+	A method can have any number of out parameters
+
+
+---------------page 157-------------------
+********array works on reference type************
+
+
+
+------Params---------------(Are used to get variable no. of parameters)--
+*************example----params string [] string_name********
+
+********var is a data type ..at run time it will give out suitable data type*********
+
+
+
+______________for right sequence in functions we use name parameters_______________func_name(string string1,string string2)
+********************************func_name(string1:"hello",string2:"vinay"),,,wrong sequence wrong output
+
+
+
+
+*****IF local variables then ASSOSIATION,else it is AGGREGATION************
+
+
+
+
+
+
+
+
+
+
+
+______________________________________________________________________________________________________________________
