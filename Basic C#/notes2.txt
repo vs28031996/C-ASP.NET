@@ -1,0 +1,53 @@
+-------ENUMERATION-----
+
+***PUBLIC ENUM ENUM_NAME
+{
+	VARIABLES YOU WANT IT TO BE
+}
+
+ENUM GENDER
+{
+MALE,FEMALE
+}
+
+CLASSOBJ.GENDER=GENDER.MALE
+____________________________________________________________________________________
+
+-----debugging----------
+F11-STEP INTO------STEP BY STEP IN A FUNCTION ----
+F10-STEP OVER-----LAST STEP FUNCTION ------
+SHIFT+F5 ---OUT OF DEBUGGER-----
+
+
+________________________________________________________________________________________
+
+----Boxing and Unboxing ----
+
+***for boxing we object[] array .it is most superior amongst data types.***
+we can accumulate any data type in it .
+****object[] obj={long i,int j}*****
+
+
+------for unboxing-------
+**we have to convert data types***type casting explicit *****
+
+
+_____________________________________________________________________________________________
+
+Private --
+***private variable_name;
+********************************public variable_name{get; private set} ///make set unuseful outside class
+_______________________________________________________________________________________________
+
+
+--------------Indexer-----------
+**indexer can be overloaded ...indexer is used to use indexing in object type data type------
+------public data_type this[any arguments like int i=0 or 1]-------------------
+
+_=-----------------UNIT TESTING_------------------
+
+
+
+
+
+

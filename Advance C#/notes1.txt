@@ -1,0 +1,24 @@
+------------Exception-----------------
+**finally block will get executed if try block is hit only whether the exception is handled or not.***
+****Generic classes definition--public class <t>{ }-----
+------Generic function--example---public string SendMessage<T>(T[] contactList, T contactToSearch, string message)----
+																						
+in the namespace(system.collections)--Array list------using system.collections class--
+ArrayList obj=new ArrayList;--
+----page 42--
+
+***List***
+---namespace -(system.collections.generic)---List<T> t can be any type------(generic list are type safe)
+List<string>=new List<string>();
+_______________________________________________________________________________________________________________________________
+-----User exception classes-------
+..........user-defined exception classes should be derived from System.Exception class......
+**********public class User_defined_exception:Exception
+					{ -------------------------	}
+	----we have to manually throw exception --syntax--LessAgeException obj=new LessAgeException(); throw obj;--
+--------while calling user-defined exceptions we have to call base class constructor--
+0----------------(public exception_classname:base(string_name)){}----------------
+
+**Generic Interface--Hybrid---
+
+_______________________________________________________________________________________________________________________________

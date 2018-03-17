@@ -1,0 +1,49 @@
+----keyvaluepair is a data structure---
+--it is single value-key pair in a collection of key-value pair data type ---
+
+-----System.Collection has SortedList<key,value>------
+-----System.collection.Generic has Dictionary<key,value>---
+
+----SortedList----we can do this ---
+		for (int index = 0; index < dictCustomerDetails.Count; index++)
+				{
+						  // Keys and Values properties cannot be used with index numbers to retrieve a single key and value
+						 Console.WriteLine("{0}\t{1}", dictCustomerDetails.Keys[index], dictCustomerDetails.Values[index].PhoneNumber);
+				}
+
+
+
+----Dictionary----example---
+	--we cannot do this in Dictionary because of keys() function ---we can use indexer for this --dict_name[index]---
+		for (int index = 0; index < dictCustomerDetails.Count; index++)
+		{
+				  // Keys and Values properties cannot be used with index numbers to retrieve a single key and value
+				 Console.WriteLine("{0}\t{1}", dictCustomerDetails.Keys[index], dictCustomerDetails.Values[index].PhoneNumber);
+		}
+------------------------------------------------------------------------------------------------------------------------------
+-----var cannot be in a class---var variable should be initilized--cannot be used as formal parameters
+-----anything other than this will give compilation error--
+
+
+		var has limitations thats why we use dynamic variable ----
+*******dynamic data;
+*******data=1.1;-----data="hek";-----
+----type is inferred at runtime---
+
+
+		---Anonymous data types (Anonymous Types)-------(are read only)--(to initialize values of a class without making object)
+__________________________________________________________________________________________________________________________
+---delegate----
+
+				 var calObj = new Calculator();
+							ApproveClaimDelegate delObj = calObj.Add;	//single cast delegate
+							delObj(10, 20);
+							delObj += calObj.Subtract;					//multicast delegate//us of + operator
+							delObj(40, 20);
+							
+	-------extending same functionality without changing conditions----
+	---initialize delegate -then 
+__________________________________________________________________________________________________________________________
+
+
+
