@@ -1,0 +1,71 @@
+---------------LINQ--Method Syntax----------------
+---this is done by using lambda expressions ::
+-0------like-----[var products = productList.Select(x => x.ProductName);]
+						and  var products = productList.Select(x => new { x.ProductName, x.Price });
+				*we dont use [from keywords] here as object method is directly called.
+				
+		---then by concept---
+		var products = productList.Select(x => new { x.ProductName, x.Price ,x.CategoryId}).OrderBy(x=>x.CategoryId).ThenByDescending(x=>x.Price);
+		---used like two order by--------1 for descending again then for ascending order by category id---
+	
+	=-----------------Group by--------------------------------
+	var products = productList.GroupBy(x=>x.CategoryId).Select(x => new { x.Key,NoOfProducts=x.Count()});
+	-------------x.key gives group by element/elements 
+	
+	--------Join----clause------
+	var product = productList.Join(categoryList,
+                                        x => x.CategoryId,
+                                        y => y.CategoryId,
+                                        (x, y) => new { x, y }).Select(g => new { g.x.ProductName, g.x.Price, g.y.CategoryId });
+										
+										
+	--------------skip take------
+	 var partitionThree = productList.Skip(2).Take(2);[skip first 2 take 2 after that]
+	------skip while works as not equal to and take while works as equal to while loop--------
+	
+	
+	----File Handling (using System.io)
+____________________________________________________________________________________________________________________________________________________________
+
+---Asynchronous Method ---------page 211---(using System.Thread)
+----	Async Method will allow Main() method to execute parallel execution.-----
+------it will execute the instructions synchronously till it gets (await) function then it will execute that function and procees further to other instructions----
+				--async:
+				*It represents a method as an asynchronous method. It tells the caller method to continue its work without waiting for the asynchronous method.
+				-------It can return result only in following formats:
+				-------Task
+				-------Task<T>
+				-------void
+				*await:
+				-------It is used to call other methods asynchronously. It suspends the execution of the method until the awaited task completes.
+___________________________________________________________________________________________________________________________________________________________	
+-------.NET FRAMEWORK------------------------------
+----------------.Net suppports integration of multiple languages which are suppported by .NET FRAMEWORK------------------------------
+
+___________________________________________________________________________________________________________________________________________________________	
+		Disadvantages of GC and destructor:
+		GC is non-deterministic
+		Destructor executes only after the program ends and is a time consuming process
+		We need a way to release unused memory without a need to wait for the GC or Finalize an object and execute the destructor.
+
+		 
+		Timely release of unused memory can be implemented by using the Dispose() of IDISPOSABLE interface:
+		a user defined method used to dispose the objects of the class in which it is declared
+		ensures space occupied by the objects are released from the heap in a timely and predictable manner
+			
+			--------implement IDISPOSABLE in class and make dispose() method in it--------
+				
+				-----Dispose methods are called when object are initialized and called again after the object is done initializing ...-------
+		---Avoid Destructor------By using a method SuppressFinalize() which belongs to the class GC. 
+									It requests that the CLR not call the destructor for the specified object.	
+				-0-------public void Dispose()
+								{
+									GC.SuppressFinalize(this);
+									Console.WriteLine("Inside Dispose()");
+								}	
+				-----WE CAN TRY-CATCH-FINALLY SO THAT DISPOSE() METHOD SHOULD RUN EVERY TIME-----(PUT DISPOSE() IN FINALLY)--------------
+	------If we use using() then we dont have to explicitly call the dispose() method.....----------			
+				
+				
+				
+	

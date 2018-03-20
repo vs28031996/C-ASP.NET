@@ -1,0 +1,70 @@
+-------------Key for SQL Server -------MYSGEC373585D------------
+*************Operations in SQL Server------ Parsing -> Optimization -> Execution---------
+
+***************************SYSTEM DEFINED ****************
+*******(Msdb)--Take Backup----(Model)---provides template for new database-----Master---store user credentials--
+--GETDATE() FOR CURRENT DATE IN SQL SERVER--------------
+		IDENTITY (Seed value, Increment value)----Auto Generate number of a column
+					seed Value:
+					Starting value
+					Default value is 1 
+		*There should be only one Identity column on a table
+		*Identity column can contain duplicate values
+	
+					Increment Value:
+					Incremental value
+					Default value is 1
+		An IDENTITY column must be of one of the following data types
+					TINYINT, SMALLINT, INT, BIGINT
+					DECIMAL, NUMERIC with a scale of 0
+--If there is a need to insert the value of CategoryId explicitly,
+ the Identity column value can be explicitly inserted using the syntax shown below:
+			SET IDENTITY_INSERT <table_name> ON
+			INSERT INTO Categories (CategoryId, CategoryName) VALUES (100, 'Electronics')///should be in this format
+			
+	@@IDENTITY WILL GIVE LAST IDENTITY VALUE INSERTED .....IDENT_CURRENT('COLUMN_NAME') WILL GIVE LARGEST IDENTITY VALUE//
+	SCOPE_IDENTITY()///WORK WITHIN SCOPE ONLY //SAME AS IDENT_CURRENT() ,DIFFERENCE IN SCOPE LIKE CLASS AND LOCAL VARIABLE
+----EVERY FAILED TRANSACTION WILL INCREMENT IDENTITY-------------	
+_________________________________________________________________________________________________________________________________________________________________
+------------------------	*********** 	SEQUENCE 	**********			----------------------------------
+----SEQUENCE IS USED LIKE STATIC QUANTITY (IDENTITY) FOR MULTIPLE TABLE.IT WORKS AS A SINGLE COMMON ENTITY WITHIN MULTIPLE TABLES.--------
+----CREATE SEQUENCE SEQUENCE_NAME //////SELECT * FROM SYS.SEQUENCES WHERE NAME='SEQUENCE_NAME'///
+
+			*DROP SEQUENCE SEQUENCE_NAME
+			CREATE SEQUENCE SEQUENCE_NAME
+			AS INT //TYPE INTEGER 
+			START WITH 1 //START WITH 
+			INCREMENT BY 1
+			MINVALUE 3
+			MAXVALUE 10
+			CYCLE //MAKE IT LIKE CYCLE AFTER MAXVALUE CYCLE WILL CONTINUE WITH MINVALUE			
+			CACHE 30//FOR PERFORMENCE SAVE IT IN CACHE MEMORY
+_____(NEXT VALUE FOR SEQUENCE_NAME) IS USED IN INSERTING SEQUENCE________________________________________________________________________________________________
+
+					Clustered Index////WORKS ON A COLUMN FOR PUTTING DATA IN INCREASING ORDER
+					It is auto-generated if a primary key is defined on the table
+					You can create maximum one clustered index per table
+					It sorts the table data
+
+					Non-clustered Index/////WORKS ON A COLUMN 
+					You need to create it manually
+					You can create maximum 999 non-clustered indexes per table
+					It does not sort the table data
+
+	IF WE USE CLUSTERED INDEX IN WHERE  CLAUSE THEN OUTPUT WILL BE IN ORDER WISE (INC/DEC)
+	AND VICE VERSA ...IF BOTH ARE USING THEN PRIORITY WILL BE GIVEN TO CLUSTERED INDEX
+__________________________________________________________________________________________________________________________________________________________
+			*Global temporary objects
+			User defined			///CREATE TABLE #Cart
+			Prefixed with '##'
+			Accessible to all users			 
+
+			*Local temporary objects  ////CREATE TABLE ##CartNew
+			User defined
+			Prefixed with '#'
+			Accessible to current user
+
+
+
+
+
