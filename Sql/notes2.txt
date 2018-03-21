@@ -1,0 +1,98 @@
+*********TYPE CASTING ----CAST(GETDATE() AS DATE)**************GETDATE() GIVES US DATE WITH TIMESTAMP******
+
+------------------BATCHES---------------------------//@variable is local variable and @@variable is global
+-----EXAMPLE ---BEGIN 
+				   DECLARE @Price NUMERIC(8)=200, @QuantityPurchased TINYINT=2,
+						   @TotalAmount NUMERIC(8) 
+				   SET @TotalAmount=@Price*@QuantityPurchased 
+				   SET @TotalAmount= 
+					  CASE 
+						 WHEN @TotalAmount>0 AND @TotalAmount<1000
+							THEN 0.95*@TotalAmount
+						 WHEN @TotalAmount>=1000 AND @TotalAmount<2000
+							THEN 0.9*@TotalAmount
+						 ELSE 0.8*@TotalAmount 
+					  END
+					  PRINT @TotalAmount
+				END
+___________________________________________________________________________________________________________________________________
+------EXCEPTION-------------
+			BEGIN TRY
+				 DECLARE @Var1 INT = 100, @Var2 INT = 0
+				 IF @Var2 = 0
+					 THROW 62000,'The Divisor cannot be zero.',1///3 PARAMETERS 1ST SHOULD BE GREATER THAN (50000 ,MESSAGE,STATUS)
+				ELSE 
+					 SELECT @Var1/@Var2 AS RESULT 
+			END TRY
+			BEGIN CATCH
+			   SELECT ERROR_LINE() AS LineNumber,
+					  ERROR_MESSAGE() AS ErrorMessage,
+					  ERROR_NUMBER() AS ErrorNumber,
+					  ERROR_SEVERITY() AS Severity,      
+					  ERROR_STATE() AS ErrorState
+			END CATCH			
+___________________________________________________________________________________________________________________________________
+	--------TRANSACTIONS---------------------
+	------SELECT @@TRANCOUNT AS TRANCOUNT--GIVES TRANSACTION COUNT 
+	
+	WHENEVER WE WRITE ROLLBACK ,IT WILL ROLLBACK EVERY TRANSACTION .
+	---EXAMPLE-----BEGIN TRAN         -- Begin first transaction 
+					   BEGIN TRAN         -- Begin second transaction 
+						  SELECT @@TRANCOUNT AS TRANCOUNT -- Value is 2 
+					   ROLLBACK TRAN        -- Rolls back all the transactions 
+						SELECT @@TRANCOUNT AS TRANCOUNT -- Value is 0 
+					ROLLBACK TRAN      -- Displays error because there is 
+										-- no active transaction
+	
+	****WE CAN CREATE A SAVEPOINT SYNTAX---SAVE TRAN S1 ///
+						BEGIN TRAN          -- Begin first transaction 
+						   BEGIN TRAN          -- Begin second transaction 
+							  SELECT @@TRANCOUNT AS TRANCOUNT -- Value is 2 
+							  SAVE TRAN S1        -- Creates a savepoint named S1 
+						   COMMIT TRAN         -- Decrements the @@TRANCOUNT 
+											   -- but does not save the database changes 
+						   SELECT @@TRANCOUNT AS TRANCOUNT -- Value is 1 
+						ROLLBACK TRAN S1    -- Rolls back to savepoint S1 
+						SELECT @@TRANCOUNT AS TRANCOUNT -- Value is 1
+		
+	ROLLBACK WITH A SAVEPOINT WILL ROLLBACK TO THE TRANSACTION WHERE COMMIT HAS DONE WITH THE RESPECTIVE TRANSACTION---
+___________________________________________________________________________________________________________________________________
+-----------ISOLATION------------
+	**SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED//WILL PRINT OUT UNCOMMITTED DATA BEFORE TRANSACTION DATA
+	**SET TRANSACTION ISOLATION LEVEL READ COMMITTED //WILL STOP THE USER FROM READING UNCOMMITTED DATA 
+	**WHEN WE WANT TO MAKE DIFFERENT WINDOW FOR DIFFERENT USERS THEN WE USE --
+	-----SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
+	**(SET TRANSACTION ISOLATION LEVEL SERIALIZABLE)//ON EVERY QUERY///FOR EVERY CUSTOMER
+	
+___________________________________________________________________________________________________________________________________
+----------------------------------------------STORED PROCEDURES-------------------------------------------------
+************		CREATE PROCEDURE usp_FirstProcedure //USE ALTER FOR UPDATE SCHEMA
+					(
+						   @InParam VARCHAR(15),
+						   @OutParam VARCHAR(15) OUT
+					) 							//WE CAN RECOMPILE THIS STORED PROCEDURE (WITH RECOMPILE KEYWORD BELOW BRACKET)
+					AS							//CAN ENCRYPT USER CANNNOT SEE STORED PROCEDURE (WITH ENCRYPT)
+					BEGIN
+					  SET @OutParam = 'Message is ' + @InParam
+					END	
+
+EXECUTE THE STORED PROCEDURE--DECLARE @OutParamValue VARCHAR(15), 
+								@InParamValue VARCHAR(15) = 'Hi'
+								EXEC usp_FirstProcedure @InParamValue , @OutParamvalue OUT//OUT VALUE FOR RESULT VARIABLE
+								SELECT @OutParamValue AS Result
+___________________________________________________________________________________________________________________________________
+--------------------MERGE-----------------
+			SET IDENTITY_INSERT PurchaseDetails ON//MANUALLY INSERT IDENTITY
+			MERGE PurchaseDetails AS [Target] 
+			USING PurchaseDetailsWholesale AS [Source]
+			ON [Target].PurchaseId=[Source].PurchaseId
+			WHEN MATCHED THEN
+			UPDATE SET QuantityPurchased =Source.QuantityPurchased
+			WHEN NOT MATCHED THEN 
+			INSERT(PurchaseId,EmailId,ProductId,QuantityPurchased,DateOfPurchase)
+			VALUES(Source.PurchaseId,Source.EmailId,Source.ProductId,Source.QuantityPurchased,Source.DateOfPurchase); 
+			SET IDENTITY_INSERT PurchaseDetails OFF
+	
+	
+	
+	
