@@ -1,0 +1,88 @@
+------------------------------------FUNCTIONS------------------------------------------------
+---RANKING---SELECT ProductId, ProductName, Price, CategoryId, 
+				ROW_NUMBER() OVER (ORDER BY Price DESC) AS RowNo FROM Products /// price in desc. order row no. is given.
+----RANK--SELECT ProductId, ProductName, Price, CategoryId, 
+				RANK() OVER (ORDER BY Price DESC) AS RANK FROM Products///Price in desc. order ; row no. given according to rank
+																			//for same price rank will be same and next value will be accordingly(like 1,1,1,4)
+---DENSERANK --SELECT ProductId, ProductName, Price, CategoryId, 
+				DENSE_RANK() OVER (ORDER BY Price DESC) AS DENSERANK FROM Products	//same as above (like 1,1,1,2)																
+---NTILE---SELECT ProductId, ProductName, Price,CategoryId, 
+				NTILE(N) OVER (ORDER BY Price Desc) AS NTILE5 FROM Products		////equally	distribute the tuples into N groups .
+---RANK/DENSERANK--SELECT ProductId, ProductName, Price,CategoryId, 
+					RANK() OVER (PARTITION BY CategoryId ORDER BY Price DESC) AS Rank FROM Products	///partition works as group by .
+					
+**************************************TYPE CASTING***********************
+----------------CONVERT(FLOAT, '17.85')--------------	
+
+********************************************DATE DIFFERENCE--DATEDIFF(day, GETDATE(), '15-JAN-2008')( enddate-startdate; this will return negative)							
+____________________________________________________________________________________________________________________________________________________________________
+------------------------------------FUNCTIONS------------------------------------------------(user defined)--------
+	***********	CREATE FUNCTION ufn_GenerateNewProductId()
+				RETURNS CHAR(4)
+				AS
+				BEGIN
+					 DECLARE @ProductId CHAR(4)
+
+				END
+				GO
+		---SELECT * FROM ufn_GetProductDetails(1)
+								
+						CREATE FUNCTION ufn_GetProductDetailsByCategory(@CategoryId INT)
+						RETURNS @ProductDetails TABLE(ProductId CHAR(4), ProductName VARCHAR(50),
+						Price NUMERIC(8), QuantityAvailable INT)
+						AS
+						BEGIN
+							 INSERT @ProductDetails     
+							 SELECT ProductId,ProductName,Price,QuantityAvailable FROM 
+							 Products WHERE CategoryId=@CategoryId
+							 RETURN
+						END
+						GO				
+____________________________________________________________________________________________________________________________________________________________________
+--------------------------SELECT TOP 10 WITH TIES ProductId, SUM(QuantityPurchased) AS PurchaseCount 
+							FROM PurchaseDetails GROUP BY ProductId 
+							ORDER BY SUM(QuantityPurchased) DESC			///top 10 records with ties(same values)
+					--Used when two or more rows that tie for last place in the limited result set are to be returned
+					---Must be used with the ORDER BY clause
+
+					
+	---SET CONCAT_NULL_YIELDS_NULL ON //set off for string 
+		SELECT 'Infosys' + NULL AS Result// will give null value
+
+		
+	---SET ANSI_NULLS ON		//set off then both will work is and = operator
+		SELECT EmailId,UserPassword FROM Users WHERE RoleId = NULL //output will be 0 records as we are using ansi ;we have to use is keyword
+
+
+-----SELECT * FROM PurchaseDetails //paging 
+		ORDER BY PurchaseId 
+		OFFSET 0 ROWS 
+		FETCH NEXT 10 ROWS ONLY 
+____________________________________________________________________________________________________________________________________________________________________
+----------------------CTE----common table expression------------------------------------------
+	**	WITH CTE_EmployeeDetails 
+		AS(
+			 SELECT EmployeeId, Name, EmailId, Designation, ManagerId         
+			 FROM Employees WHERE ManagerId IS NULL
+			 UNION ALL  
+			 SELECT e.EmployeeId, e.Name, e.EmailId, e.Designation, e.ManagerId 
+			 FROM Employees e INNER JOIN CTE_EmployeeDetails ed     
+			 ON e.ManagerId = ed.EmployeeId
+			)
+		SELECT Name,EmailId,Designation FROM CTE_EmployeeDetails
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
